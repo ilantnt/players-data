@@ -2,7 +2,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import json
-from prod.Player import Player
+from web_info.Player import Player
 
 
 
@@ -11,7 +11,7 @@ from prod.Player import Player
 class Configuration(object):
 
     def __init__(self):
-        with open(r'C:\Users\ilan\PycharmProjects\players_viewer\prod\config.json') as json_file:
+        with open('config.json') as json_file:
             self.data = json.load(json_file)
             print(self.data)
 
@@ -34,21 +34,26 @@ class WebData:
             fetches the table of players stats and reformat the table
 
         """
+        result_fetched = None
+        while result_fetched is None:
+            table_players_stats = (self.driver.find_element_by_id('player-table-statistics-body'))
+            table_players_stats = table_players_stats.text
 
-        table_players_stats = (self.driver.find_element_by_id('player-table-statistics-body'))
-        table_players_stats = table_players_stats.text
+            self.players = table_players_stats.splitlines()
 
-        self.players = table_players_stats.splitlines()
-
+            if self.players != []:
+                result_fetched = "got info"
+            print("1.{}".format(self.players))
         # delete the unnecessary row number
         del self.players[:len(self.players):3]
+        print(self.players)
 
     def table_to_players(self):
         """
             after table format, break each row to separate player
         :return:
         """
-
+        print(self.players)
         for i in range(len(self.players)):
 
             if i % 2:
@@ -76,10 +81,3 @@ class WebData:
                 #print("The player name is: {}".format(self.players[i]))
 
 
-try:
-    handler = WebData()
-    handler.get_url_data("https://www.whoscored.com/Teams/63/Show/Spain-{0}".format("Atletico-Madrid"))
-    handler.extract_player_data()
-    handler.table_to_players()
-except Exception as e:
-    print("Error is: {}".format(e))

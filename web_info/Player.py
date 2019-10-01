@@ -2,7 +2,6 @@
 class Player:
     def __init__(self,player_obj):
         self.name = player_obj["name"]
-        self.age = player_obj["age"]
         self.position = ""
         self.goals = player_obj["goals"]
         self.assists = player_obj["assists"]
