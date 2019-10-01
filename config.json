@@ -91,6 +91,6 @@
       "host":"localhost"
     }
   ],
-  "Driver_Path": "chromedriver.exe"
+  "Driver_Path": "utils/chromedriver.exe"
 
 }
