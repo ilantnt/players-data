@@ -4,3 +4,4 @@ class DB:
         self.host = host
         self.user = user
         self.password = pwd
+

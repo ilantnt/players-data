@@ -9,13 +9,12 @@ from web_info.Player import Player
 
 
 class Configuration(object):
-
     def __init__(self):
         with open('config.json') as json_file:
             self.data = json.load(json_file)
             print(self.data)
 
-class WebData:
+class ScrapeWebData:
     def __init__(self):
         options = Options()
         options.add_argument('--headless')
@@ -24,41 +23,36 @@ class WebData:
         conf = Configuration()
         print(conf.data)
         self.driver = webdriver.Chrome(conf.data['Driver_Path'], chrome_options=options)
-        self.players = []
+        # self.players = []
+        self.players_scraped_data = []
+
 
     def get_url_data(self, url):
         self.driver.get(url)
 
-    def extract_player_data(self):
-        """
-            fetches the table of players stats and reformat the table
+    def extract_players_data(self):
 
-        """
         result_fetched = None
         while result_fetched is None:
             table_players_stats = (self.driver.find_element_by_id('player-table-statistics-body'))
             table_players_stats = table_players_stats.text
 
-            self.players = table_players_stats.splitlines()
+            self.players_scraped_data = table_players_stats.splitlines()
 
-            if self.players != []:
+            if self.players_scraped_data != []:
                 result_fetched = "got info"
-            print("1.{}".format(self.players))
+            print("1.{}".format(self.players_scraped_data))
         # delete the unnecessary row number
-        del self.players[:len(self.players):3]
-        print(self.players)
+        del self.players_scraped_data[:len(self.players_scraped_data):3]
+        print(self.players_scraped_data)
 
-    def table_to_players(self):
-        """
-            after table format, break each row to separate player
-        :return:
-        """
-        print(self.players)
-        for i in range(len(self.players)):
+    def parse_players_scraped_data(self):
+        print(self.players_scraped_data)
+        for i in range(len(self.players_scraped_data)):
 
             if i % 2:
                 #palyers data
-                data = self.players[i].split(' ')
+                data = self.players_scraped_data[i].split(' ')
 
                 #dictionary contain all player necessary data
 
@@ -70,14 +64,14 @@ class WebData:
                 player_data['rating'] = data[-1]
                 player_data['apps'] = data[-11]
 
-                plater_sample = Player(player_data)
+                player_sample = Player(player_data)
                 print("Scraped...")
 
 
 
                 print('\n')
             else:
-                name = self.players[i]
+                name = self.players_scraped_data[i]
                 #print("The player name is: {}".format(self.players[i]))
 
 
