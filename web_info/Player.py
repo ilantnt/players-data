@@ -1,3 +1,6 @@
+"""
+    Class of Player that defines player as an object for future uses
+"""
 
 class Player:
     def __init__(self,player_obj):

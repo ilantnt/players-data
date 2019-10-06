@@ -23,7 +23,7 @@ class ScrapeWebData:
         conf = Configuration()
         print(conf.data)
         self.driver = webdriver.Chrome(conf.data['Driver_Path'], chrome_options=options)
-        # self.players = []
+        self.players = []
         self.players_scraped_data = []
 
 
@@ -51,27 +51,23 @@ class ScrapeWebData:
         for i in range(len(self.players_scraped_data)):
 
             if i % 2:
-                #palyers data
-                data = self.players_scraped_data[i].split(' ')
-
-                #dictionary contain all player necessary data
+                data_of_players = self.players_scraped_data[i].split(' ')
 
                 player_data = {}
                 player_data['name'] = name
-                player_data['goals'] = data[-9]
-                player_data['assists'] = data[-8]
-                player_data['minutes_played'] = data[-10]
-                player_data['rating'] = data[-1]
-                player_data['apps'] = data[-11]
+                player_data['goals'] = data_of_players[-9]
+                player_data['assists'] = data_of_players[-8]
+                player_data['minutes_played'] = data_of_players[-10]
+                player_data['rating'] = data_of_players[-1]
+                player_data['apps'] = data_of_players[-11]
 
                 player_sample = Player(player_data)
+                self.players.append(player_sample)
+
                 print("Scraped...")
 
-
-
-                print('\n')
             else:
                 name = self.players_scraped_data[i]
                 #print("The player name is: {}".format(self.players[i]))
 
-
+        return self.players
