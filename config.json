@@ -1,5 +1,10 @@
 {
-    "Spain": [
+    "Table_Teams":
+    {
+      "Spain": "https://www.livescore.com/soccer/spain/primera-division",
+      "Italy": ""
+    },
+    "Spain_Teams": [
     {
       "team_name": "Atletico Madrid",
       "url": "https://www.whoscored.com/Teams/63/Show/Spain-Atletico-Madrid"
@@ -83,14 +88,14 @@
  ],
   "Italy":
           [],
-  "MySql":[
+  "MySql":
     {
-      "user": "root",
-      "Password": "Baily0802",
-      "Database": "soccerdb",
+      "User": "postgres",
+      "Password": "Password1",
+      "Database": "Palpi",
       "Host":"localhost"
     }
-  ],
+  ,
   "Driver_Path": "utils/chromedriver.exe"
 
 }
